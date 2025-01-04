@@ -50,7 +50,6 @@ function Personal({ user, onSave }) {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            disabled
             placeholder="Phone"
             className="px-4 py-1 rounded-md bg-[#ffef94] text-xl"
           />
@@ -62,6 +61,7 @@ function Personal({ user, onSave }) {
           <input
             type="text"
             name="email"
+            disabled
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
@@ -69,13 +69,13 @@ function Personal({ user, onSave }) {
           />
         </div>
         <div className='flex flex-col'>
-          <label htmlFor='lastname'>Last Name</label>
+          <label htmlFor='location'>Location</label>
           <input
             type="text"
-            name="lastname"
-            value={formData.lastname}
+            name="location"
+            value={formData.location}
             onChange={handleChange}
-            placeholder="Last Name"
+            placeholder="Location"
             className="px-4 py-1 rounded-md bg-[#ffef94] text-xl"
           />
         </div>
