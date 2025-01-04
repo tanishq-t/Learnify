@@ -3,11 +3,28 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { loginRoute } from "../utils/APIroutes";
+import { loginRoute,getUserRoute } from "../utils/APIroutes";
 import logo from '../assets/Learnify (1).png';
 
 function Login() {
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get(getUserRoute, { withCredentials: true });
+        if (response.data) {
+          navigate('/');
+          return;
+        }
+      } 
+      catch (error) {
+        console.error("Error fetching user:", error);
+      }
+  };
+    
+    getUser();
+  }, []);
 
   const toastOptions = {
     position: "bottom-right",

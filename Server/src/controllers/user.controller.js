@@ -186,6 +186,93 @@ const logoutUser = asyncHandler(async (req,res)=>{
     .json(new ApiResponse(200, {}, "User logged Out"))
 })
 
+const accountRecovery = asyncHandler(async(req,res)=>{
+    const {email} = req.body;
+    if(!email){
+      throw new ApiError(400, "Email is required");
+    }
+  
+    const user = await User.findOne({
+      email: req.body.email,
+    });
+  
+    if (!user) {
+      throw new ApiError(404, "User does not exist");
+    }
+  
+    const otp = Math.floor(100000 + Math.random() * 900000);
+  
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: EMAIL_USER,
+        pass: EMAIL_PASS,
+      },
+    });
+
+    let mailOptions = {
+      from: EMAIL_USER,
+      to: user.email,
+      subject: "Password Reset Code",
+      text: `Your verification code is ${otp}. It will expire in 2 minutes.`,
+    };
+  
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        throw new ApiError(411,error.message)
+      }
+  
+      return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          {
+            otp: otp,
+            username: user.username,
+            email: user.email
+          },
+          "Email sent to the user!"
+        )
+      );
+    });
+  
+  })
+
+const changePassword = asyncHandler(async(req,res)=>{
+    const {email,password} = req.body;
+  
+    if(!email){
+      throw new ApiError(411,"Email is required");
+    }
+    if(!password){
+      throw new ApiError(411,"Password is required!");
+    }
+  
+    const user = await User.findOne({
+      email: req.body.email,
+    });
+  
+    if(!user){
+      throw new ApiError(411,"User does not exist!")
+    }
+  
+    user.password = password
+    await user.save({validateBeforeSave: false})
+  
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200, 
+          {
+            usename:user.username
+          },
+          "Password changed successfully"
+        )
+      )
+  });
+
 const refreshAccessToken = asyncHandler(async (req, res)=>{
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
 
@@ -331,5 +418,7 @@ export {
     getCurrentUser,
     updateAccountDetails,
     updateUserCoverImage,
-    sendVerification
+    sendVerification,
+    accountRecovery,
+    changePassword
 }

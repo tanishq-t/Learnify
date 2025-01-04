@@ -8,6 +8,7 @@ import Home from './components/Home.jsx'
 import Login from './components/Login.jsx'
 import Register from './components/Register.jsx'
 import Profile from './components/Profile/Profile.jsx'
+import Forgot from './components/Forgot.jsx'
 
 
 
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
     <Route path='/' element={<Layout />}>
       <Route path='/login' element={<Login/>}></Route>
       <Route path='/register' element={<Register/>}></Route>
+      <Route path='/account-recovery' element={<Forgot/>}></Route>
       <Route path='' element={<Home/>}></Route>
       <Route path='/profile' element={<Profile/>}></Route>
       <Route path='/explore' element={<Home/>}></Route>

@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom'
 
 function Layout() {
     const location = useLocation();
-    const noHeaderRoutes = ['/login','/register'];
+    const noHeaderRoutes = ['/login','/register','/account-recovery'];
     const [vcard,setvcard] = useState(false);
     const [notifications,setNotification]=useState(false);
 
