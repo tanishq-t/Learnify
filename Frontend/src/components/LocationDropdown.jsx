@@ -20,7 +20,7 @@ function LocationDropdown({selectedCountry,setSelectedCountry}) {
       <select
         value={selectedCountry}
         onChange={handleChange}
-        className='bg-transparent p-[1rem] border-[#ad2323] rounded-[0.4rem] border-[0.1rem] w-[100%] text-[1rem] focus:border-[#d94c4c] focus:outline-none'
+        className='bg-transparent p-[1rem] border-[#ad2323] rounded-[0.4rem] border-[0.1rem] text-[1rem] focus:border-[#d94c4c] focus:outline-none'
       >
         <option value="" disabled className="">
           Location

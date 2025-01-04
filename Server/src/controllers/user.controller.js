@@ -3,6 +3,12 @@ import {ApiError} from "../utils/ApiErrors.js";
 import {User} from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
+import nodemailer from 'nodemailer';
+import twilio from 'twilio';
+
+
+const EMAIL_USER = process.env.EMAIL_USER;
+const EMAIL_PASS = process.env.EMAIL_PASS;
 
 
 const generateAccessAndRefereshTokens = async(userId) =>{
@@ -21,6 +27,55 @@ const generateAccessAndRefereshTokens = async(userId) =>{
         throw new ApiError(500, "Something went wrong while generating referesh and access token")
     }
 }
+
+const sendVerification = asyncHandler(async(req,res)=>{
+    const { email } = req.body;
+
+    if (!email) {
+        throw new ApiError(400, 'Email and phone are required.');
+    }
+
+    const existedUser = await User.findOne({
+        $or: [{ email } ]
+    })
+
+    if (existedUser) {
+        throw new ApiError(409, "User with email already exists")
+    }
+    
+    const verificationCode = Math.floor(100000 + Math.random() * 900000);
+
+    try {
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: EMAIL_USER,
+            pass: EMAIL_PASS,
+          },
+        });
+    
+        await transporter.sendMail({
+          from: EMAIL_USER,
+          to: email,
+          subject: 'Verification Code',
+          text: `Your Learnify verification code is: ${verificationCode}`,
+        });
+        
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                verificationCode,
+                "Code sent successfully!"
+            )
+        );
+  } 
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error sending verification code.' });
+  }
+})
 
 
 const registerUser = asyncHandler(async(req,res)=>{
@@ -276,4 +331,5 @@ export {
     getCurrentUser,
     updateAccountDetails,
     updateUserCoverImage,
+    sendVerification
 }

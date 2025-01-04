@@ -7,6 +7,7 @@ import Layout from './Layout.jsx'
 import Home from './components/Home.jsx'
 import Login from './components/Login.jsx'
 import Register from './components/Register.jsx'
+import Profile from './components/Profile/Profile.jsx'
 
 
 
@@ -16,7 +17,7 @@ const router = createBrowserRouter(
       <Route path='/login' element={<Login/>}></Route>
       <Route path='/register' element={<Register/>}></Route>
       <Route path='' element={<Home/>}></Route>
-      <Route path='/profile' element={<Home/>}></Route>
+      <Route path='/profile' element={<Profile/>}></Route>
       <Route path='/explore' element={<Home/>}></Route>
       <Route path='/status' element={<Home/>}></Route>
       <Route path='/help' element={<Home/>}></Route>

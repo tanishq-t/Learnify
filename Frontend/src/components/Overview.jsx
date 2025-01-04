@@ -17,7 +17,17 @@ function Overview({user}) {
             </div>
             <div className='w-full flex justify-end items-start gap-4'>
                 <img src={linkedin} className='w-10 hover:opacity-80 cursor-pointer'></img>
-                <button className='px-2 py-2 bg-green-400 rounded-md text-white hover:opacity-80 active:opacity-60 font-semibold'>Download CV</button>
+                  <button
+                    onClick={() => {
+                      const link = document.createElement("a");
+                      link.href = user.cvUrl; // URL pointing to the user's CV
+                      link.download = `${user.firstname}_${user.lastname}_CV.pdf`;
+                      link.click();
+                    }}
+                    className="px-2 py-2 bg-green-400 rounded-md text-white hover:opacity-80 active:opacity-60 font-semibold"
+                  >
+                    Download CV
+                  </button>
             </div>
         </div>
         <Objective></Objective>
