@@ -7,8 +7,10 @@ import Education from './Education'
 import Personal from './Personal'
 import Skills from './Skills'
 import Experience from './Experience'
+import { useOutletContext } from 'react-router-dom';
 
 function Profile() {
+    const {viewProfilePic,setViewProfilePic} = useOutletContext();
     const navigate=useNavigate();
     const [user, setUser] = useState(null);
     const [step, setStep] = useState(1);
@@ -65,7 +67,7 @@ function Profile() {
 
       {/* Render the current step */}
       {step === 1 && (
-        <Personal user={user} onSave={handleSave} />
+        <Personal user={user} onSave={handleSave} viewProfilePic={viewProfilePic} setViewProfilePic={setViewProfilePic}/>
       )}
       {step === 2 && (
         <Education user={user} onSave={handleSave} />

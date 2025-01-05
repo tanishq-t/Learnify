@@ -69,7 +69,8 @@ function Login() {
         navigate("/")        
       } 
       catch (error) {
-        toast.error(error.message, toastOptions);
+        if(error.status==404) toast.error("No User exist with this email!", toastOptions);
+        else if(error.status==401) toast.error("Invalid Password",toastOptions);
       }
       
     }
