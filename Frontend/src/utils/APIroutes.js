@@ -6,3 +6,4 @@ export const verificationRoute = `${host}/api/account-recovery`
 export const changePassRoute = `${host}/api/changePassword`
 export const getUserRoute = `${host}/api/getUser`
 export const sendVerificationRoute = `${host}/api/send-verification`
+export const uploadRoute = `${host}/api/upload-profile`
