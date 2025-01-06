@@ -2,6 +2,7 @@ import {asyncHandler} from "../utils/asyncHandler.js";
 import {ApiError} from "../utils/ApiErrors.js";
 import {User} from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import jwt from "jsonwebtoken"
 import nodemailer from 'nodemailer';
 import twilio from 'twilio';
@@ -374,21 +375,16 @@ const updateAccountDetails = asyncHandler(async(req, res) => {
 
 //Update Cover image
 
-const updateUserCoverImage = asyncHandler(async(req, res) => {
+const uploadImage = asyncHandler(async(req, res) => {
     const coverImageLocalPath = req.file?.path
 
     if (!coverImageLocalPath) {
         throw new ApiError(400, "Cover image file is missing")
     }
-
-    //TODO: delete old image - assignment
-
-
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
 
     if (!coverImage.url) {
-        throw new ApiError(400, "Error while uploading on avatar")
-        
+        throw new ApiError(400, "Error while uploading on avatar")   
     }
 
     const user = await User.findByIdAndUpdate(
@@ -408,7 +404,6 @@ const updateUserCoverImage = asyncHandler(async(req, res) => {
     )
 })
 
-
 export {
     registerUser,
     loginUser,
@@ -417,8 +412,8 @@ export {
     changeCurrentPassword,
     getCurrentUser,
     updateAccountDetails,
-    updateUserCoverImage,
     sendVerification,
     accountRecovery,
-    changePassword
+    changePassword,
+    uploadImage
 }

@@ -51,6 +51,9 @@ const userSchema = new Schema(
             trim: true,
             enum: ['mentor', 'mentee', 'admin']
         },
+        coverImage: {
+            type: String
+        },
         password: {
             type: String,
             required: [true, 'Password is required'],

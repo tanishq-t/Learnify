@@ -89,24 +89,24 @@ function Personal({ user, onSave,viewProfilePic,setViewProfilePic }) {
         </div>
         <div className='flex justify-between items-center w-full'>
           <div className='flex flex-col'>
-            <label htmlFor='firstname'>First Name</label>
+            <label htmlFor='location'>Location</label>
             <input
               type="text"
-              name="firstname"
-              value={formData.firstname}
+              name="location"
+              value={formData.location}
               onChange={handleChange}
-              placeholder="First Name"
+              placeholder="Location"
               className="px-4 py-1 rounded-md bg-[#ffef94] text-xl"
             />
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='lastname'>Last Name</label>
+            <label htmlFor='gender'>Gender</label>
             <input
               type="text"
-              name="lastname"
-              value={formData.lastname}
+              name="gender"
+              value={formData.gender}
               onChange={handleChange}
-              placeholder="Last Name"
+              placeholder="Gender"
               className="px-4 py-1 rounded-md bg-[#ffef94] text-xl"
             />
           </div>
