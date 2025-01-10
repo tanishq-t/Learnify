@@ -349,31 +349,40 @@ const getCurrentUser = asyncHandler(async(req, res) => {
 })
 
 const updateAccountDetails = asyncHandler(async(req, res) => {
-    const {fullName, email} = req.body
+    const {firstname,lastname,phone,location,dob,gender,city,pincode,address} = req.body
 
-    if (!fullName || !email) {
-        throw new ApiError(400, "All fields are required")
-    }
-
-    const user = await User.findByIdAndUpdate(
-        req.user?._id,
-        {
-            $set: {
-                fullName,
-                email: email
-            }
-        },
-        {new: true}
+    try {
+        const user = await User.findByIdAndUpdate(
+            req.user?._id,
+            {
+                $set: {
+                    firstname,
+                    lastname,
+                    phone,
+                    location,
+                    dob,
+                    gender,
+                    city,
+                    pincode,
+                    address
+                }
+            },
+            {new: true}
+            
+        ).select("-password")
+    
+        return res
+        .status(200)
+        .json(new ApiResponse(200, user, "Account details updated successfully"))
+    } 
+    catch (error) {
+        console.log(error);
+        throw new ApiError(401,"Failed to update user details!");
         
-    ).select("-password")
-
-    return res
-    .status(200)
-    .json(new ApiResponse(200, user, "Account details updated successfully"))
+    }
 });
 
 
-//Update Cover image
 
 const uploadImage = asyncHandler(async(req, res) => {
     const coverImageLocalPath = req.file?.path

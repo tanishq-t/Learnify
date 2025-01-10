@@ -54,6 +54,26 @@ const userSchema = new Schema(
         coverImage: {
             type: String
         },
+        dob: {
+            type: String,
+            trim: true
+        },
+        gender: {
+            type: String,
+            trim: true
+        },
+        city: {
+            type: String,
+            trim: true,
+        },
+        pincode: {
+            type: String,
+            trim: true
+        },
+        address: {
+            type: String,
+            trim: true
+        },
         password: {
             type: String,
             required: [true, 'Password is required'],

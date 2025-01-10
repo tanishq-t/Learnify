@@ -7,3 +7,4 @@ export const changePassRoute = `${host}/api/changePassword`
 export const getUserRoute = `${host}/api/getUser`
 export const sendVerificationRoute = `${host}/api/send-verification`
 export const uploadRoute = `${host}/api/upload-profile`
+export const updationRoute = `${host}/api/update-user`

@@ -8,6 +8,7 @@ import Personal from './Personal'
 import Skills from './Skills'
 import Experience from './Experience'
 import { useOutletContext } from 'react-router-dom';
+import { updationRoute } from '../../utils/APIroutes';
 
 function Profile() {
     const {viewProfilePic,setViewProfilePic} = useOutletContext();
@@ -51,38 +52,28 @@ function Profile() {
         setStep(prevStep=>prevStep-1);
     };
 
-    const handleSave = async (sectionData) => {
-        try {
-          await axios.post('/api/save-profile-section', { sectionData }, { withCredentials: true });
-          handleNext();
-        } 
-        catch (error) {
-          console.error("Error saving section:", error);
-        }
-      };
-
   return (
     <div className="flex flex-col gap-10 w-full pr-20 pb-12 pt-28 pl-48">
       <h1 className="text-3xl font-semibold">Complete Your Profile</h1>
 
       {/* Render the current step */}
       {step === 1 && (
-        <Personal user={user} onSave={handleSave} viewProfilePic={viewProfilePic} setViewProfilePic={setViewProfilePic}/>
+        <Personal user={user}  viewProfilePic={viewProfilePic} setViewProfilePic={setViewProfilePic}/>
       )}
       {step === 2 && (
-        <Education user={user} onSave={handleSave} />
+        <Education user={user} />
       )}
       {step === 3 && (
-        <Experience user={user} onSave={handleSave} />
+        <Experience user={user} />
       )}
       {step === 4 && (
-        <Skills user={user} onSave={handleSave} />
+        <Skills user={user} />
       )}
 
-      <div className="flex justify-between mt-6">
+      <div className="flex justify-center gap-6 mt-2 w-[75%]">
         {step > 1 && (
           <button
-            className="px-4 py-2 bg-gray-500 text-white rounded-md"
+            className="px-6 py-2 text-[18px] bg-gray-500 text-white rounded-md"
             onClick={handlePrevious}
           >
             Previous
@@ -90,7 +81,7 @@ function Profile() {
         )}
         {step < 9 && (
           <button
-            className="px-4 py-2 bg-blue-500 text-white rounded-md"
+            className="px-6 py-2 text-[18px] bg-blue-500 text-white rounded-md"
             onClick={handleNext}
           >
             Next
